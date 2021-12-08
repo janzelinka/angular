@@ -1,42 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/app.component';
+import { UsersService } from 'src/app/services/users.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers: [UsersService],
 })
 export class LoginComponent implements OnInit {
-  constructor(
-    private httpClient: HttpClient // private userInfoService: UserInfoServiceService
-  ) {}
+  constructor(private userService: UsersService) {}
 
   public userName: string = '';
   public password: string = '';
 
+  private userInfo: { token: string } = { token: '' };
+
   ngOnInit(): void {}
 
-  public register = () => {
+  public login = () => {
     const user: IUser = {
       userName: this.userName,
       password: this.password,
-      age: 12,
-      firstName: 'abc',
-      lastName: 'def',
     };
 
-    this.httpClient.post('http://localhost:3000/login', user).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        // this.userInfoService.setToken(data);
-      },
-      complete: () => {
-        console.log('completed');
-      },
-      error: (err) => {
-        console.log('error', err);
-      },
-    });
+    this.userService
+      .login(user)
+      .then((res: { token: string }) => {
+        this.userInfo = res;
+        window.localStorage.setItem('token', res.token);
+        window.localStorage.setItem(
+          'userInfo',
+          JSON.stringify(jwtDecode(res.token))
+        );
+      })
+      .catch(alert);
   };
 }
