@@ -1,39 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from 'src/app/app.component';
 import { UsersService } from 'src/app/services/users.service';
 import jwtDecode from 'jwt-decode';
+import { AuthService, IUser } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [UsersService],
+  providers: [UsersService, AuthService],
 })
 export class LoginComponent implements OnInit {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly authService: AuthService
+  ) {}
 
   public userName: string = '';
   public password: string = '';
 
-  private userInfo: { token: string } = { token: '' };
-
   ngOnInit(): void {}
 
   public login = () => {
+    const { userService, authService, userName, password } = this;
+
     const user: IUser = {
-      userName: this.userName,
-      password: this.password,
+      userName: userName,
+      password: password,
     };
 
-    this.userService
+    userService
       .login(user)
       .then((res: { token: string }) => {
-        this.userInfo = res;
-        window.localStorage.setItem('token', res.token);
-        window.localStorage.setItem(
-          'userInfo',
-          JSON.stringify(jwtDecode(res.token))
-        );
+        authService.setUserInfo(res.token);
       })
       .catch(alert);
   };

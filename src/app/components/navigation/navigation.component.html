@@ -3,8 +3,19 @@
   <div class="container">
     <ul class="nav nav-pills">
       <li role="presentation" class="active"><a routerLink="">Home</a></li>
-      <li role="presentation"><a routerLink="login">Login</a></li>
-      <li role="presentation"><a routerLink="register">Register</a></li>
+
+      <li role="presentation" *ngIf="_isLoggedIn()" (click)="_logout()">
+        <a routerLink="login">Logout</a>
+      </li>
+      <li role="presentation" *ngIf="_isLoggedIn()">
+        <a routerLink="profile">Profile</a>
+      </li>
+      <li role="presentation" *ngIf="!_isLoggedIn()">
+        <a routerLink="login">Login</a>
+      </li>
+      <li role="presentation" *ngIf="!_isLoggedIn()">
+        <a routerLink="register">Register</a>
+      </li>
     </ul>
   </div>
 </div>

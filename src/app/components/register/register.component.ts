@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { IUser } from 'src/app/app.component';
+import { IUser } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -14,8 +13,6 @@ export class RegisterComponent implements OnInit {
 
   public userName: string = '';
   public password: string = '';
-
-  private data: any = null;
 
   ngOnInit(): void {}
 
