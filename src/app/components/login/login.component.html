@@ -1,3 +1,7 @@
+<!-- 
+  CASE 1 - user is not logged in
+  SHOW LOGIN FORM 
+-->
 <div class="container" *ngIf="!this.isUserLoggedIn()">
   <h2>Login</h2>
   <form method="POST" action="http://localhost:3000/login">
@@ -37,6 +41,10 @@
     </button>
   </form>
 </div>
+<!-- 
+  CASE 2 - user is logged in
+  SHOW USER PROFILE PAGE
+-->
 <div class="container" *ngIf="this.isUserLoggedIn()">
   <h1>
     Hello, you are logged in

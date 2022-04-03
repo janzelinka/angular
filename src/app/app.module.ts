@@ -8,7 +8,9 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { CookieService } from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie-service';
+import { TableComponent } from './components/_ui/table/table.component';
+import { ProductsComponent } from './components/products/products.component'
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { CookieService } from 'ngx-cookie-service'
     LoginComponent,
     RegisterComponent,
     UserProfileComponent,
+    TableComponent,
+    ProductsComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [CookieService],

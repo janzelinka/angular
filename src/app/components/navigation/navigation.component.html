@@ -7,6 +7,11 @@
       <li role="presentation" *ngIf="_isLoggedIn()" (click)="_logout()">
         <a routerLink="login">Logout</a>
       </li>
+
+      <li role="presentation" *ngIf="_isLoggedIn()">
+        <a routerLink="products">Products</a>
+      </li>
+
       <li role="presentation" *ngIf="_isLoggedIn()">
         <a routerLink="profile">Profile</a>
       </li>
