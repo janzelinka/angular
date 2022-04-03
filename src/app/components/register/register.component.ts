@@ -13,6 +13,12 @@ export class RegisterComponent implements OnInit {
 
   public userName: string = '';
   public password: string = '';
+  public age: number = -1;
+  public firstName: string = '';
+  public lastName: string = '';
+
+  public registrationSuccess: boolean = false;
+  public registrationFailed: boolean = false;
 
   ngOnInit(): void {}
 
@@ -20,8 +26,20 @@ export class RegisterComponent implements OnInit {
     const user: IUser = {
       userName: this.userName,
       password: this.password,
+      age: this.age,
+      firstName: this.firstName,
+      lastName: this.lastName,
     };
 
-    this.userService.register(user).then((res) => {});
+    this.userService
+      .register(user)
+      .then((res) => {
+        this.registrationSuccess = true;
+        this.registrationFailed = false;
+      })
+      .catch(() => {
+        this.registrationFailed = true;
+        this.registrationSuccess = false;
+      });
   };
 }

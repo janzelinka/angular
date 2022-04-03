@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
-import jwtDecode from 'jwt-decode';
 import { AuthService, IUser } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +17,14 @@ export class LoginComponent implements OnInit {
   public userName: string = '';
   public password: string = '';
 
+  public isUserLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+
+  public getUserInfo() {
+    return this.authService.getUserInfo();
+  }
+
   ngOnInit(): void {}
 
   public login = () => {
@@ -31,8 +38,8 @@ export class LoginComponent implements OnInit {
     userService
       .login(user)
       .then((res: { token: string }) => {
-        authService.setUserInfo(res.token);
+        console.log(res);
       })
-      .catch(alert);
+      .catch((error) => console.error(error));
   };
 }

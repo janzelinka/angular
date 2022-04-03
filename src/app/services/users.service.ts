@@ -23,7 +23,7 @@ export class UsersService {
 
   public login = async (user: any): Promise<{ token: string }> => {
     return new Promise((res, rej) => {
-      this.http.post('http://localhost:3000/login', user).subscribe({
+      this.http.post('http://localhost:3000/login', user , { withCredentials: true}).subscribe({
         next: (data: any) => {
           res(data);
         },

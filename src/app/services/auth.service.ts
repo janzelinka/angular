@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import jwtDecode from 'jwt-decode';
-
 export interface IUser {
   userName: string;
   firstName?: string;
@@ -23,17 +23,12 @@ interface IUserInfo {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
-
-  setUserInfo = (token: string) => {
-    window.localStorage.setItem('token', token);
-    window.localStorage.setItem('userInfo', JSON.stringify(jwtDecode(token)));
-  };
+  constructor(private readonly cookieService: CookieService) {}
 
   getUserInfo = (): IUserInfo | null => {
-    const userInfoStr = window.localStorage.getItem('userInfo') ?? undefined;
+    const userInfoStr = this.cookieService.get('token');
     if (!!userInfoStr) {
-      const userInfo: IUserInfo = JSON.parse(userInfoStr);
+      const userInfo: IUserInfo = jwtDecode(userInfoStr);
       return userInfo;
     }
     return null;
@@ -48,7 +43,6 @@ export class AuthService {
   };
 
   logout = () => {
-    window.localStorage.removeItem('userInfo');
-    window.localStorage.removeItem('token');
+    this.cookieService.delete('token');
   };
 }

@@ -1,39 +1,91 @@
 <div class="container">
   <h2>Registration</h2>
-  <form method="POST" action="http://localhost:3000/login">
+  <form method="POST" action="http://localhost:3000/login/register">
     <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
+      <label for="userName">Username</label>
       <input
-        type="text"
+        type="email"
         class="form-control"
-        placeholder="Username"
         id="userName"
         name="userName"
+        aria-describedby="emailHelp"
+        placeholder="Enter email"
         [(ngModel)]="userName"
-        required="required"
       />
     </div>
-    <div class="input-group">
+    <div class="form-group">
       <label for="password">Password</label>
       <input
         type="password"
         class="form-control"
+        id="password"
         placeholder="Password"
+        [(ngModel)]="password"
         id="password"
         name="password"
-        [(ngModel)]="password"
-        required="required"
       />
     </div>
     <div class="form-group">
-      <div class="input-group">
-        <input
-          type="submit"
-          class="form-control"
-          value="submit"
-          (click)="register()"
-        />
+      <label for="password">Password confirm</label>
+      <input
+        type="password"
+        class="form-control"
+        id="passwordRepeat"
+        placeholder="Password once more"
+        name="passwordRepeat"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="firstName">First name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="First name"
+        name="firstName"
+        [(ngModel)]="firstName"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        placeholder="Last name"
+        name="lastName"
+        [(ngModel)]="lastName"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        class="form-control"
+        id="age"
+        placeholder="Age"
+        name="age"
+        [(ngModel)]="age"
+      />
+    </div>
+
+    <div *ngIf="this.registrationSuccess">
+      <div class="alert alert-success" role="alert">
+        User {{ this.firstName + " " + this.lastName }} succesfully created.
       </div>
     </div>
+
+    <div *ngIf="this.registrationFailed">
+      <div class="alert alert-danger" role="alert">
+        There was an error creating user.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="register()">
+      Submit
+    </button>
   </form>
 </div>
