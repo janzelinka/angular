@@ -12,10 +12,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly userService: UsersService,
     private readonly authService: AuthService
-  ) {}
+  ) { }
 
   public userName: string = '';
   public password: string = '';
+  public errorMessage: string = ''
 
   public isUserLoggedIn() {
     return this.authService.isLoggedIn();
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     return this.authService.getUserInfo();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public login = () => {
     const { userService, authService, userName, password } = this;
@@ -38,8 +39,11 @@ export class LoginComponent implements OnInit {
     userService
       .login(user)
       .then((res: { token: string }) => {
+        this.errorMessage = ''
         console.log(res);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        this.errorMessage = error.message
+      });
   };
 }
